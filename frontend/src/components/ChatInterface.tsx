@@ -204,7 +204,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     }
   };
 
-  const modelName = modelInfo?.model_name.split('/').pop() || 'SmolLM2-360M-Instruct';
+  const modelName = modelInfo?.model_name.split('/').pop() || 'SmolLM2-135M-Instruct';
 
   return (
     <div className="flex-1 flex h-full bg-[#090810] min-w-0 overflow-hidden font-sans">

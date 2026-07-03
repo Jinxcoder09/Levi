@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     HOST: str = Field(default="0.0.0.0")
     DEBUG: bool = Field(default=False)
 
-    LOCAL_MODEL_PATH: str = Field(default="models/SmolLM2-360M-Instruct-Q4_K_M.gguf")
+    LOCAL_MODEL_PATH: str = Field(default="models/SmolLM2-135M-Instruct-Q4_K_M.gguf")
 
     DEFAULT_TEMPERATURE: float = Field(default=0.7)
     DEFAULT_MAX_TOKENS: int = Field(default=512)

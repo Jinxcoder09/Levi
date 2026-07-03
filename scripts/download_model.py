@@ -2,9 +2,9 @@ import os
 import sys
 
 def download_model():
-    repo_id = os.getenv("LOCAL_MODEL_REPO", "bartowski/SmolLM2-360M-Instruct-GGUF")
-    filename = os.getenv("LOCAL_MODEL_FILE", "SmolLM2-360M-Instruct-Q4_K_M.gguf")
-    model_path = os.getenv("LOCAL_MODEL_PATH", "models/SmolLM2-360M-Instruct-Q4_K_M.gguf")
+    repo_id = os.getenv("LOCAL_MODEL_REPO", "bartowski/SmolLM2-135M-Instruct-GGUF")
+    filename = os.getenv("LOCAL_MODEL_FILE", "SmolLM2-135M-Instruct-Q4_K_M.gguf")
+    model_path = os.getenv("LOCAL_MODEL_PATH", "models/SmolLM2-135M-Instruct-Q4_K_M.gguf")
 
     target_dir = os.path.dirname(os.path.abspath(model_path))
     os.makedirs(target_dir, exist_ok=True)

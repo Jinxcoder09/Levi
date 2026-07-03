@@ -66,7 +66,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
     }, 100);
   };
 
-  const modelName = modelInfo?.model_name || 'SmolLM2-360M-Q4_K_M';
+  const modelName = modelInfo?.model_name || 'SmolLM2-135M-Q4_K_M';
 
   return (
     <div className="flex-1 overflow-y-auto bg-[#090810] p-6 space-y-6 font-sans max-w-[1400px] mx-auto w-full">
@@ -118,7 +118,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </div>
           </div>
           <div className="space-y-1 flex-1 flex flex-col justify-end">
-            <h2 className="text-sm font-bold text-white">~180 MB</h2>
+            <h2 className="text-sm font-bold text-white">~80 MB</h2>
             <p className="text-[10px] text-[#58556f]">Q4_K_M quantized</p>
           </div>
         </div>
