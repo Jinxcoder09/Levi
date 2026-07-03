@@ -154,10 +154,10 @@ async def complete(request: CompletionRequest):
 
 @api.get("/health")
 async def health():
-    info = await llm_manager.get_status_info()
+    initialized = llm_manager.provider is not None and llm_manager.provider.initialized
     return {
         "status": "ok",
-        "model_loaded": info.get("initialized", False),
+        "model_loaded": initialized,
     }
 
 

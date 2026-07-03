@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { 
   MessageSquare, Code, FileText, ShieldAlert, List, RefreshCw,
   Cpu, HardDrive, Database

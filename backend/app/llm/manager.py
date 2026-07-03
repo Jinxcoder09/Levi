@@ -63,8 +63,14 @@ class LLMManager:
         return await p.generate_stream(*args, **kwargs)
 
     async def get_status_info(self) -> Dict[str, Any]:
-        p = await self.get_active_provider()
-        return p.get_info()
+        if self.provider:
+            return self.provider.get_info()
+        return {
+            "provider": "none",
+            "initialized": False,
+            "model_path": os.path.abspath(settings.LOCAL_MODEL_PATH),
+            "context_length": settings.DEFAULT_CONTEXT_LENGTH,
+        }
 
 
 llm_manager = LLMManager()

@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   MessageSquare, Code2, Settings2, ChevronLeft, ChevronRight, LayoutDashboard, Cpu,

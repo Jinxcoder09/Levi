@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { Info, Cpu, Code, BookOpen, HardDrive, Share2 } from 'lucide-react';
 
 export const AboutPage: React.FC = () => {
