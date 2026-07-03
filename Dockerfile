@@ -22,17 +22,8 @@ COPY backend/ ./backend/
 COPY --from=frontend-builder /frontend/dist ./frontend/dist
 
 # Pre-download model so container starts fast (avoids HF Spaces startup timeout)
-RUN python -c "
-import os
-os.makedirs('models', exist_ok=True)
-from huggingface_hub import hf_hub_download
-hf_hub_download(
-    repo_id='bartowski/Qwen2.5-Coder-0.5B-Instruct-GGUF',
-    filename='Qwen2.5-Coder-0.5B-Instruct-Q4_K_M.gguf',
-    local_dir='models',
-    local_dir_use_symlinks=False
-)
-"
+COPY scripts/setup_model.py /tmp/setup_model.py
+RUN python /tmp/setup_model.py && rm /tmp/setup_model.py
 
 ENV PORT=8000 HOST=0.0.0.0 PYTHONPATH=/app
 
