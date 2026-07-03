@@ -11,9 +11,6 @@ import { AboutPage } from './components/AboutPage';
 
 export const App: React.FC = () => {
   const {
-    conversations,
-    activeConversationId,
-    setActiveConversationId,
     activeConversation,
     settings,
     modelInfo,
@@ -22,7 +19,6 @@ export const App: React.FC = () => {
     error,
     updateSettings,
     createNewConversation,
-    deleteConversation,
     sendMessage,
     executeCodeAction,
     clearHistory,
@@ -31,12 +27,6 @@ export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('dashboard');
   const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState<boolean>(false);
-
-  const selectConversationFromSidebar = (id: string) => {
-    setActiveConversationId(id);
-    setActiveTab('chat');
-    setMobileSidebarOpen(false);
-  };
 
   const selectTabFromNav = (tab: string) => {
     setActiveTab(tab);
@@ -49,14 +39,8 @@ export const App: React.FC = () => {
       {/* 1. Sidebar Navigation (Desktop only, hidden on lg screens down) */}
       <div className="hidden lg:block h-full">
         <Sidebar
-          conversations={conversations}
-          activeConversationId={activeConversationId}
-          setActiveConversationId={selectConversationFromSidebar}
-          createNewConversation={createNewConversation}
-          deleteConversation={deleteConversation}
           activeTab={activeTab}
           setActiveTab={selectTabFromNav}
-          modelInfo={modelInfo}
           collapsed={sidebarCollapsed}
           setCollapsed={setSidebarCollapsed}
         />
@@ -79,14 +63,8 @@ export const App: React.FC = () => {
               className="relative"
             >
               <Sidebar
-                conversations={conversations}
-                activeConversationId={activeConversationId}
-                setActiveConversationId={selectConversationFromSidebar}
-                createNewConversation={createNewConversation}
-                deleteConversation={deleteConversation}
                 activeTab={activeTab}
                 setActiveTab={selectTabFromNav}
-                modelInfo={modelInfo}
                 collapsed={false}
                 setCollapsed={() => {}}
               />

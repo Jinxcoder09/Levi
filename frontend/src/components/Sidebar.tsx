@@ -1,35 +1,20 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  MessageSquare, Code2, Settings2, Info, Plus, 
-  Trash2, ChevronLeft, ChevronRight, LayoutDashboard, Cpu,
-  User, Database, Sparkles, HelpCircle, History, FileText,
-  Terminal, ShieldCheck, Settings
+  MessageSquare, Code2, Settings2, ChevronLeft, ChevronRight, LayoutDashboard, Cpu,
+  History, FileText, Terminal
 } from 'lucide-react';
-import type { Conversation, ModelInfo } from '../types';
 
 interface SidebarProps {
-  conversations: Conversation[];
-  activeConversationId: string | null;
-  setActiveConversationId: (id: string) => void;
-  createNewConversation: () => void;
-  deleteConversation: (id: string) => void;
   activeTab: string;
   setActiveTab: (tab: string) => void;
-  modelInfo: ModelInfo | null;
   collapsed: boolean;
   setCollapsed: (c: boolean) => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
-  conversations,
-  activeConversationId,
-  setActiveConversationId,
-  createNewConversation,
-  deleteConversation,
   activeTab,
   setActiveTab,
-  modelInfo,
   collapsed,
   setCollapsed,
 }) => {
@@ -47,7 +32,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <motion.aside 
       animate={{ width: collapsed ? 64 : 256 }}
-      transition={{ duration: 0.3, cubicBezier: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
       className="bg-[#100d20] border-r border-[#1d1b2e] flex flex-col h-screen relative select-none overflow-hidden shrink-0"
     >
       {/* Brand Header */}
