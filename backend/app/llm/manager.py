@@ -8,8 +8,8 @@ from backend.app.config import settings
 
 logger = logging.getLogger(__name__)
 
-MODEL_REPO = "bartowski/SmolLM2-135M-Instruct-GGUF"
-MODEL_FILE = "SmolLM2-135M-Instruct-Q4_K_M.gguf"
+MODEL_REPO = "bartowski/Qwen2.5-Coder-0.5B-Instruct-GGUF"
+MODEL_FILE = "Qwen2.5-Coder-0.5B-Instruct-Q4_K_M.gguf"
 
 
 class LLMManager:

@@ -51,7 +51,7 @@ export const Settings: React.FC<SettingsProps> = ({
             <div className="space-y-1.5">
               <label className="text-[10px] font-bold text-[#9d99b3] uppercase tracking-wider">Model</label>
               <div className="bg-[#090810] border border-[#1d1b2e] text-xs text-white rounded-xl px-3 py-2.5 font-mono">
-                SmolLM2-135M-Instruct-Q4_K_M.gguf
+                Qwen2.5-Coder-0.5B-Instruct-Q4_K_M.gguf
               </div>
             </div>
 
@@ -127,7 +127,7 @@ export const Settings: React.FC<SettingsProps> = ({
             <div className="space-y-3.5 text-xs select-none">
               <div className="flex justify-between">
                 <span className="text-[#9d99b3]">Model</span>
-                <span className="font-semibold text-white font-mono text-[11px]">{modelInfo?.model_name || 'SmolLM2-135M-Q4_K_M'}</span>
+                <span className="font-semibold text-white font-mono text-[11px]">{modelInfo?.model_name || 'Qwen2.5-Coder-0.5B-Q4_K_M'}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-[#9d99b3]">Status</span>

@@ -16,7 +16,7 @@ export const useChat = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
-  const modelInfo = { model_name: 'SmolLM2-135M-Q4_K_M', status: 'loaded' };
+  const modelInfo = { model_name: 'Qwen2.5-Coder-0.5B-Q4_K_M', status: 'loaded' };
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -86,7 +86,7 @@ export const useChat = () => {
       id: Math.random().toString(36).substring(7),
       title: cleanTitle,
       messages: [],
-      activeModel: 'SmolLM2-135M-Q4_K_M',
+      activeModel: 'Qwen2.5-Coder-0.5B-Q4_K_M',
       timestamp: Date.now(),
     };
     setConversations((prev) => [newConv, ...prev]);

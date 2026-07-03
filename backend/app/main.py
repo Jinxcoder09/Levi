@@ -103,7 +103,7 @@ async def run_standard(
                 "total_tokens": usage.get("total_tokens", 0),
                 "duration_ms": int(duration * 1000),
             },
-            model="SmolLM2-135M-Q4_K_M",
+            model="Qwen2.5-Coder-0.5B-Q4_K_M",
         )
     except Exception as e:
         logger.error(f"Generation error: {e}")
