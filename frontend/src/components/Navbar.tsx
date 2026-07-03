@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { 
-  Bell, Search, Sun, Moon, Cpu, Globe, 
-  CheckCircle2, AlertCircle, HelpCircle 
+  Bell, Search, Sun, Moon, Cpu, 
+  CheckCircle2, AlertCircle
 } from 'lucide-react';
 import type { ModelInfo, AppSettings } from '../types';
 

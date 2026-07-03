@@ -1,27 +1,22 @@
-import { useState, useEffect, useCallback } from 'react';
-import type { ChatMessage, Conversation, AppSettings, ModelInfo, ModelMetrics } from '../types';
+import { useState, useEffect } from 'react';
+import type { ChatMessage, Conversation, AppSettings } from '../types';
 
-const LOCAL_STORAGE_CONVS_KEY = 'antigravity_conversations';
-const LOCAL_STORAGE_SETTINGS_KEY = 'antigravity_settings';
+const LOCAL_STORAGE_CONVS_KEY = 'levi_conversations';
+const LOCAL_STORAGE_SETTINGS_KEY = 'levi_settings';
 
 const DEFAULT_SETTINGS: AppSettings = {
-  inferenceMode: 'auto',
   temperature: 0.7,
-  maxTokens: 1024,
+  maxTokens: 512,
   topP: 0.9,
-  contextLength: 4096,
   streaming: true,
   theme: 'dark',
-  hfToken: '',
-  hfModelId: 'Qwen/Qwen2.5-Coder-0.5B-Instruct',
 };
 
 export const useChat = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
-  const [modelInfo, setModelInfo] = useState<ModelInfo | null>(null);
-  const [metrics, setMetrics] = useState<ModelMetrics | null>(null);
+  const modelInfo = { model_name: 'SmolLM2-360M-Q4_K_M', status: 'loaded' };
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -76,42 +71,7 @@ export const useChat = () => {
     localStorage.setItem(LOCAL_STORAGE_SETTINGS_KEY, JSON.stringify(settings));
   }, [settings]);
 
-  // Fetch model metadata
-  const fetchModelInfo = useCallback(async () => {
-    try {
-      const response = await fetch('/api/model-info');
-      if (response.ok) {
-        const data = await response.json();
-        setModelInfo(data);
-      }
-    } catch (e) {
-      console.error('Failed to load model info', e);
-    }
-  }, []);
-
-  // Fetch performance metrics
-  const fetchMetrics = useCallback(async () => {
-    try {
-      const response = await fetch('/api/metrics');
-      if (response.ok) {
-        const data = await response.json();
-        setMetrics(data);
-      }
-    } catch (e) {
-      console.error('Failed to load performance metrics', e);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchModelInfo();
-    fetchMetrics();
-    // Poll metrics and model status every 10 seconds
-    const interval = setInterval(() => {
-      fetchModelInfo();
-      fetchMetrics();
-    }, 10000);
-    return () => clearInterval(interval);
-  }, [fetchModelInfo, fetchMetrics]);
+  // no-op: model info is static for 512MB-optimized local mode
 
   const updateSettings = (newSettings: Partial<AppSettings>) => {
     setSettings((prev) => {
@@ -126,7 +86,7 @@ export const useChat = () => {
       id: Math.random().toString(36).substring(7),
       title: cleanTitle,
       messages: [],
-      activeModel: modelInfo?.model_name || 'Qwen2.5-Coder',
+      activeModel: 'SmolLM2-360M-Q4_K_M',
       timestamp: Date.now(),
     };
     setConversations((prev) => [newConv, ...prev]);
@@ -243,10 +203,7 @@ export const useChat = () => {
                   );
                 }
                 
-                if (chunkData.done && chunkData.usage) {
-                  fetchMetrics();
-                  fetchModelInfo();
-                }
+                if (chunkData.done && chunkData.usage) {}
               } catch (e) {
                 // Ignore incomplete JSON chunks
               }
@@ -267,8 +224,6 @@ export const useChat = () => {
               : c
           )
         );
-        fetchMetrics();
-        fetchModelInfo();
       }
     } catch (e: any) {
       console.error(e);
@@ -292,31 +247,23 @@ export const useChat = () => {
     }
   };
 
-  const executeCodeAction = async (action: 'explain' | 'debug' | 'refactor' | 'generate-tests' | 'summarize', code: string, language: string, context?: string): Promise<string> => {
+  const executeCodeAction = async (action: string, code: string, language: string, context?: string): Promise<string> => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(`/api/${action}`, {
+      const prompt = `${action} the following ${language} code:\n\n${code}${context ? '\n\nContext: ' + context : ''}`;
+      const response = await fetch('/api/chat', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          code,
-          language,
-          context,
+          messages: [{ role: 'user', content: prompt }],
           temperature: settings.temperature,
           max_tokens: settings.maxTokens,
           stream: false,
         }),
       });
-
-      if (!response.ok) {
-        throw new Error(`API failed: ${response.statusText}`);
-      }
-
+      if (!response.ok) throw new Error(`API failed: ${response.statusText}`);
       const result = await response.json();
-      fetchMetrics();
       return result.content;
     } catch (e: any) {
       console.error(e);
@@ -367,7 +314,6 @@ export const useChat = () => {
     activeConversation,
     settings,
     modelInfo,
-    metrics,
     isLoading,
     error,
     updateSettings,
@@ -377,6 +323,5 @@ export const useChat = () => {
     executeCodeAction,
     getCompletion,
     clearHistory,
-    fetchModelInfo,
   };
 };

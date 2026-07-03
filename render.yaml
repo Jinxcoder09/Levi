@@ -25,3 +25,7 @@ services:
         generateValue: true
       - key: HF_API_TOKEN
         sync: false # Set in Render UI
+    disk:
+      name: models-storage
+      mountPath: /app/models
+      sizeGB: 10

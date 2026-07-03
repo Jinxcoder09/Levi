@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { 
-  Play, Trash2, Save, Terminal, Code2, Copy, Check, ChevronDown,
-  Maximize2, RefreshCw
+  Play, Trash2, Save, Copy, Check, ChevronDown
 } from 'lucide-react';
 import { MonacoEditorWrapper } from './MonacoEditorWrapper';
 

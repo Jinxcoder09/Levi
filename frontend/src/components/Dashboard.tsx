@@ -1,14 +1,12 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { 
   MessageSquare, Code, FileText, ShieldAlert, List, RefreshCw,
-  Cpu, HardDrive, Zap, BarChart2, ChevronRight, HelpCircle, Database
+  Cpu, HardDrive, Database
 } from 'lucide-react';
-import type { ModelInfo, ModelMetrics } from '../types';
+import type { ModelInfo } from '../types';
 
 interface DashboardProps {
   modelInfo: ModelInfo | null;
-  metrics: ModelMetrics | null;
   setActiveTab: (tab: string) => void;
   createNewConversation: (title?: string) => void;
   sendMessage: (msg: string) => void;
@@ -16,7 +14,6 @@ interface DashboardProps {
 
 export const Dashboard: React.FC<DashboardProps> = ({
   modelInfo,
-  metrics,
   setActiveTab,
   createNewConversation,
   sendMessage,
@@ -69,14 +66,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
     }, 100);
   };
 
-  // Safe formatting variables matching image values
-  const modelName = modelInfo?.model_name.split('/').pop() || 'SmolLM2-360M';
-  const memoryUsed = modelInfo?.memory_usage_gb || 1.53;
-  const memoryTotal = modelInfo?.total_memory_gb || 7.65;
-  const memoryPercent = Math.min(100, Math.round((memoryUsed / memoryTotal) * 100)) || 20;
-
-  const latency = metrics?.average_latency_seconds || 22.13;
-  const totalTokens = metrics?.total_tokens || 816;
+  const modelName = modelInfo?.model_name || 'SmolLM2-360M-Q4_K_M';
 
   return (
     <div className="flex-1 overflow-y-auto bg-[#090810] p-6 space-y-6 font-sans max-w-[1400px] mx-auto w-full">
@@ -102,13 +92,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
       </div>
 
-      {/* Grid: System Status & Metrics */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 select-none">
+      {/* Grid: System Status */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 select-none">
         
         {/* Model Status Card */}
-        <div className="bg-[#131121] border border-[#1d1b2e] p-5 rounded-2xl flex flex-col gap-4 min-h-[110px] hover:border-primary/20 transition-all duration-300">
+        <div className="bg-[#131121] border border-[#1d1b2e] p-5 rounded-2xl flex flex-col gap-4 min-h-[110px] hover:border-primary/20 transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold text-[#9d99b3] uppercase tracking-wider">Model Status</span>
+            <span className="text-[10px] font-bold text-[#9d99b3] uppercase tracking-wider">Model</span>
             <div className="p-1.5 bg-emerald-500/10 rounded-lg text-emerald-500">
               <Cpu size={14} />
             </div>
@@ -119,50 +109,31 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </div>
         </div>
 
-        {/* Memory Allocation Card with Progress Bar */}
-        <div className="bg-[#131121] border border-[#1d1b2e] p-5 rounded-2xl flex flex-col gap-4 min-h-[110px] hover:border-primary/20 transition-all duration-300">
+        {/* Memory Card */}
+        <div className="bg-[#131121] border border-[#1d1b2e] p-5 rounded-2xl flex flex-col gap-4 min-h-[110px] hover:border-primary/20 transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold text-[#9d99b3] uppercase tracking-wider">Memory Usage</span>
+            <span className="text-[10px] font-bold text-[#9d99b3] uppercase tracking-wider">Model Size</span>
             <div className="p-1.5 bg-blue-500/10 rounded-lg text-blue-500">
               <HardDrive size={14} />
             </div>
           </div>
-          <div className="space-y-2 flex-1 flex flex-col justify-end">
-            <div className="flex justify-between items-baseline">
-              <h2 className="text-sm font-bold text-white">{memoryUsed.toFixed(2)} GB <span className="text-[10px] text-[#58556f] font-normal">/ {memoryTotal.toFixed(2)} GB</span></h2>
-              <span className="text-[10px] text-blue-400 font-semibold">{memoryPercent}%</span>
-            </div>
-            <div className="w-full bg-[#1c1a30] h-1.5 rounded-full overflow-hidden">
-              <div className="bg-blue-500 h-full rounded-full" style={{ width: `${memoryPercent}%` }}></div>
-            </div>
+          <div className="space-y-1 flex-1 flex flex-col justify-end">
+            <h2 className="text-sm font-bold text-white">~180 MB</h2>
+            <p className="text-[10px] text-[#58556f]">Q4_K_M quantized</p>
           </div>
         </div>
 
-        {/* Latency Card */}
-        <div className="bg-[#131121] border border-[#1d1b2e] p-5 rounded-2xl flex flex-col gap-4 min-h-[110px] hover:border-primary/20 transition-all duration-300">
+        {/* Context Card */}
+        <div className="bg-[#131121] border border-[#1d1b2e] p-5 rounded-2xl flex flex-col gap-4 min-h-[110px] hover:border-primary/20 transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold text-[#9d99b3] uppercase tracking-wider">Avg. Latency</span>
+            <span className="text-[10px] font-bold text-[#9d99b3] uppercase tracking-wider">Context</span>
             <div className="p-1.5 bg-primary/10 rounded-lg text-primary">
-              <Zap size={14} />
+              <RefreshCw size={14} />
             </div>
           </div>
           <div className="space-y-1 flex-1 flex flex-col justify-end">
-            <h2 className="text-xl font-bold text-white">{latency.toFixed(2)} s</h2>
-            <p className="text-[10px] text-[#58556f]">Per request</p>
-          </div>
-        </div>
-
-        {/* Tokens Card */}
-        <div className="bg-[#131121] border border-[#1d1b2e] p-5 rounded-2xl flex flex-col gap-4 min-h-[110px] hover:border-primary/20 transition-all duration-300">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold text-[#9d99b3] uppercase tracking-wider">Tokens Used</span>
-            <div className="p-1.5 bg-red-500/10 rounded-lg text-red-500">
-              <BarChart2 size={14} />
-            </div>
-          </div>
-          <div className="space-y-1 flex-1 flex flex-col justify-end">
-            <h2 className="text-xl font-bold text-white">{totalTokens.toLocaleString()}</h2>
-            <p className="text-[10px] text-[#58556f]">Total (Input + Output)</p>
+            <h2 className="text-xl font-bold text-white">512</h2>
+            <p className="text-[10px] text-[#58556f]">Tokens context window</p>
           </div>
         </div>
 

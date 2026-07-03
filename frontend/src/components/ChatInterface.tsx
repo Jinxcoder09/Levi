@@ -1,12 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Send, Sparkles, AlertCircle, Copy, Check, 
-  Upload, Terminal, HelpCircle, FileText, Download,
-  CornerDownLeft, Paperclip, RotateCcw,
-  User, Shield, MessageSquare, Plus, Search, Code, Mic, Trash2
+  Send, AlertCircle, Copy, Check, Download,
+  Paperclip, Terminal, Plus,
+  User, Shield, Search, Code, Mic
 } from 'lucide-react';
-import type { ChatMessage, Conversation, ModelInfo } from '../types';
+import type { Conversation, ModelInfo } from '../types';
 
 interface ChatInterfaceProps {
   activeConversation: Conversation | null;

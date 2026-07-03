@@ -14,7 +14,6 @@ export const App: React.FC = () => {
     activeConversation,
     settings,
     modelInfo,
-    metrics,
     isLoading,
     error,
     updateSettings,
@@ -105,7 +104,6 @@ export const App: React.FC = () => {
               {activeTab === 'dashboard' && (
                 <Dashboard
                   modelInfo={modelInfo}
-                  metrics={metrics}
                   setActiveTab={selectTabFromNav}
                   createNewConversation={createNewConversation}
                   sendMessage={sendMessage}
