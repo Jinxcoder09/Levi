@@ -1,31 +1,19 @@
 services:
   - type: web
-    name: antigravity-ai-coder
+    name: levi-ai-coder
     env: docker
     dockerfilePath: Dockerfile
-    plan: free # Can be upgraded for RAM/volumes
+    plan: free
     envVars:
       - key: PORT
         value: 8000
-      - key: HOST
-        value: 0.0.0.0
-      - key: INFERENCE_MODE
-        value: auto
       - key: LOCAL_MODEL_PATH
-        value: models/Qwen2.5-Coder-0.5B-Instruct-Q4_K_M.gguf
-      - key: HF_MODEL_ID
-        value: Qwen/Qwen2.5-Coder-0.5B-Instruct
-      - key: DEFAULT_TEMPERATURE
-        value: 0.7
+        value: models/SmolLM2-360M-Instruct-Q4_K_M.gguf
+      - key: DEFAULT_CONTEXT_LENGTH
+        value: 512
       - key: DEFAULT_MAX_TOKENS
-        value: 1024
-      - key: RATE_LIMIT_PER_MINUTE
-        value: 60
-      - key: SECRET_KEY
-        generateValue: true
-      - key: HF_API_TOKEN
-        sync: false # Set in Render UI
+        value: 512
     disk:
       name: models-storage
       mountPath: /app/models
-      sizeGB: 10
+      sizeGB: 2

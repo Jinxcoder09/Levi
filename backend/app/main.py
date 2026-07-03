@@ -6,7 +6,7 @@ import asyncio
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator, Dict, Any
 
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, status, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
@@ -37,6 +37,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="Levi AI Coder", version="1.0.0", lifespan=lifespan)
+api = APIRouter(prefix="/api")
 
 app.add_middleware(LoggingMiddleware)
 app.add_middleware(
@@ -109,7 +110,7 @@ async def run_standard(
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
 
-@app.post("/chat")
+@api.post("/chat")
 async def chat(request: ChatRequest):
     msgs = [m.model_dump() for m in request.messages]
     system_prompt = None
@@ -138,7 +139,7 @@ async def chat(request: ChatRequest):
     )
 
 
-@app.post("/complete")
+@api.post("/complete")
 async def complete(request: CompletionRequest):
     prompt = get_completion_prompt(request.prefix, request.suffix, request.language or "python")
     if request.stream:
@@ -151,7 +152,7 @@ async def complete(request: CompletionRequest):
                               max_tokens=request.max_tokens or 128)
 
 
-@app.get("/health")
+@api.get("/health")
 async def health():
     info = await llm_manager.get_status_info()
     return {
@@ -159,6 +160,8 @@ async def health():
         "model_loaded": info.get("initialized", False),
     }
 
+
+app.include_router(api)
 
 frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist"))
 if os.path.exists(frontend_dir):
