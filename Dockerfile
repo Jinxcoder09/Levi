@@ -24,7 +24,7 @@ COPY --from=frontend-builder /frontend/dist ./frontend/dist
 COPY scripts/setup_model.py /tmp/setup_model.py
 RUN python /tmp/setup_model.py && rm /tmp/setup_model.py
 
-ENV PORT=8000 HOST=0.0.0.0 PYTHONPATH=/app
+ENV PORT=7860 HOST=0.0.0.0 PYTHONPATH=/app
 
 EXPOSE 7860
 
