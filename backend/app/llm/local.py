@@ -30,11 +30,11 @@ class LocalLLMProvider(BaseLLMProvider):
             return False
 
         try:
-            threads = max(1, (os.cpu_count() or 2) - 1)
+            threads = max(1, os.cpu_count() or 2)
             logger.info(
                 f"Loading model: {self.model_path} | "
                 f"ctx={self.context_length} threads={threads} "
-                f"mmap=true mlock=false n_batch=8"
+                f"mmap=true mlock=false n_batch=512"
             )
 
             def load_model():
@@ -42,7 +42,8 @@ class LocalLLMProvider(BaseLLMProvider):
                     model_path=self.model_path,
                     n_ctx=self.context_length,
                     n_threads=threads,
-                    n_batch=8,
+                    n_batch=512,
+                    n_gpu_layers=0,
                     use_mmap=True,
                     use_mlock=False,
                     verbose=False,
