@@ -21,7 +21,7 @@ export const AboutPage: React.FC = () => {
             Hybrid Local/Cloud Architecture
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Antigravity Coder is built on a cascading inference pipeline. It is configured to run the state-of-the-art <strong>Qwen2.5-Coder-0.5B-Instruct</strong> model locally in GGUF format using <code>llama-cpp-python</code>. 
+            Antigravity Coder is built on a cascading inference pipeline. It is configured to run the lightweight <strong>SmolLM2-360M-Instruct</strong> model locally in GGUF format using <code>llama-cpp-python</code>. 
           </p>
           <p className="text-sm text-muted-foreground leading-relaxed">
             If the application is deployed on cloud hosts with restricted memory boundaries (e.g. Render Free, Railway Starter), the backend automatically and transparently switches to the <strong>Hugging Face Serverless Inference API</strong>, guaranteeing high-performance execution without needing a local GPU or extensive memory budgets.
@@ -32,10 +32,10 @@ export const AboutPage: React.FC = () => {
           <div className="bg-card border border-border p-5 rounded-2xl space-y-2">
             <h3 className="text-sm font-bold flex items-center gap-1.5">
               <Code size={16} className="text-primary" />
-              Qwen2.5-Coder Engine
+              SmolLM2 Engine
             </h3>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Leverages the Qwen2.5-Coder 0.5B Instruct model, specifically fine-tuned for code generation, mathematical logic, bug fixing, and language formatting in dozens of programming languages.
+              Leverages the SmolLM2 360M Instruct model, optimized for fast inference on CPU with excellent instruction-following and code assistance capabilities.
             </p>
           </div>
 

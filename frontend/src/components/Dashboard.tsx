@@ -66,7 +66,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
     }, 100);
   };
 
-  const modelName = modelInfo?.model_name || 'Qwen2.5-Coder-0.5B-Q4_K_M';
+  const modelName = modelInfo?.model_name || 'SmolLM2-360M-Instruct-Q4_K_M';
 
   return (
     <div className="flex-1 overflow-y-auto bg-[#090810] p-6 space-y-6 font-sans max-w-[1400px] mx-auto w-full">

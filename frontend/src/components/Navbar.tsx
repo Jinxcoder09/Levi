@@ -108,7 +108,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-secondary border border-border rounded-full text-xs font-semibold text-foreground">
             <Cpu size={13} className="text-primary animate-pulse" />
             <span className="truncate max-w-[120px] font-mono text-[11px]">
-              {modelInfo?.model_name.split('/').pop() || 'Qwen2.5-Coder-0.5B'}
+              {modelInfo?.model_name.split('/').pop() || 'SmolLM2-360M-Instruct'}
             </span>
           </div>
 

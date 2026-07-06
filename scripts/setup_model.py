@@ -10,8 +10,8 @@ def download_model():
         
         print("Downloading model from Hugging Face...")
         hf_hub_download(
-            repo_id='bartowski/Qwen2.5-Coder-0.5B-Instruct-GGUF',
-            filename='Qwen2.5-Coder-0.5B-Instruct-Q4_K_M.gguf',
+            repo_id='HuggingFaceTB/SmolLM2-360M-Instruct-GGUF',
+            filename='SmolLM2-360M-Instruct-Q4_K_M.gguf',
             local_dir='models',
             local_dir_use_symlinks=False
         )
